@@ -3,6 +3,7 @@ from tokenizers.models import BPE
 from tokenizers.trainers import BpeTrainer
 from tokenizers.pre_tokenizers import Whitespace
 
+#task1.2
 class HindiTokenizer:
     def __init__(self):
         self.tokenizer = Tokenizer(BPE(unk_token="[UNK]"))

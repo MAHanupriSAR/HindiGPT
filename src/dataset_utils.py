@@ -4,13 +4,22 @@ from torch.utils.data import Dataset
 from tokeniser import HindiTokenizer
 
 #Task 1.1
-def load_and_split_corpus(file_path, train_ratio=0.9):
+def load_and_split_corpus(folder_path, train_ratio=0.9):
     '''
     input: file_path: A string pointing to your raw data (e.g., "data/raw/train.csv")
     output: A tuple containing two lists: (train_text, val_text), lists of Hindi strings
     '''
-    df = pd.read_csv(file_path)
-    text_data = df.iloc[:, 0].dropna().tolist()
+    text_data = []
+    
+    # Get a list of all .txt files in the folder
+    search_path = os.path.join(folder_path, "*.txt")
+    file_list = glob.glob(search_path)
+    
+    for file_path in file_list:
+        with open(file_path, "r", encoding="utf-8") as f:
+            content = f.read().strip()
+            if content:  # Only add if the file isn't empty
+                text_data.append(content)
     
     split_idx = int(len(text_data) * train_ratio)
     train_text = text_data[:split_idx]

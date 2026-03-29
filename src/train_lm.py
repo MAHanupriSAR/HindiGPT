@@ -69,7 +69,7 @@ def run_language_modeling():
     batch_size = 32
     epochs = 50
     
-    train_text, val_text = load_and_split_corpus("data/raw/train.csv")
+    train_text, val_text = load_and_split_corpus("data/raw/hindi_corpus/train.csv")
     
     tokenizer = HindiTokenizer()
     tokenizer.train(train_text, vocab_size=vocab_size)

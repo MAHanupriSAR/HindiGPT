@@ -34,3 +34,15 @@ class GPTLanguageModel(nn.Module):
             current_tokens = torch.cat((current_tokens, next_token), dim=1)
             
         return current_tokens
+
+class GPTClassifier(nn.Module):
+    def __init__(self, vocab_size, embed_dim, num_heads, hidden_dim, num_layers, max_seq_len, num_classes=3):
+        super().__init__()
+        self.backbone = MiniGPTBase(vocab_size, embed_dim, num_heads, hidden_dim, num_layers, max_seq_len)
+        self.classifier_head = nn.Linear(embed_dim, num_classes)
+
+    def forward(self, x):
+        features = self.backbone(x)
+        last_token_features = features[:, -1, :]
+        logits = self.classifier_head(last_token_features)
+        return logits

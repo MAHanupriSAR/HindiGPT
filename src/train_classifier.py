@@ -4,7 +4,7 @@ import torch.optim as optim
 from torch.utils.data import DataLoader
 
 from dataset_utils import load_classification_data, TextClassificationDataset, load_and_split_corpus
-from tokenizer import HindiTokenizer
+from tokeniser import HindiTokenizer
 from heads import GPTClassifier
 
 def train_epoch(model, dataloader, optimizer, criterion, device):

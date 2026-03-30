@@ -3,6 +3,7 @@ import torch.nn as nn
 import torch.optim as optim
 from torch.utils.data import DataLoader
 import math
+from tqdm import tqdm
 
 from dataset_utils import load_and_split_corpus, LanguageModelingDataset
 from tokeniser import HindiTokenizer
@@ -12,7 +13,9 @@ def train_epoch(model, dataloader, optimizer, criterion, device):
     model.train()
     total_loss = 0.0
     
-    for x, y in dataloader:
+    progress_bar = tqdm(dataloader, desc="Training", leave=False)
+    
+    for x, y in progress_bar:
         x, y = x.to(device), y.to(device)
         
         optimizer.zero_grad()
@@ -26,6 +29,7 @@ def train_epoch(model, dataloader, optimizer, criterion, device):
         optimizer.step()
         
         total_loss += loss.item()
+        progress_bar.set_postfix(loss=loss.item())
         
     return total_loss / len(dataloader)
 

@@ -70,7 +70,8 @@ def run_language_modeling():
     epochs = 5
     
     print("Loading and splitting corpus...")
-    train_text, val_text = load_and_split_corpus("data/raw/hindi_corpus/train")
+    # train_text, val_text = load_and_split_corpus("data/raw/hindi_corpus/train")
+    train_text, val_text = load_and_split_corpus("data/raw/hindi_corpus/merged_train.txt")
     
     print("Training tokenizer...")
     tokenizer = HindiTokenizer()

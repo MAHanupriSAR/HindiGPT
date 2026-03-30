@@ -69,25 +69,33 @@ def run_language_modeling():
     batch_size = 32
     epochs = 5
     
+    print("Loading and splitting corpus...")
     train_text, val_text = load_and_split_corpus("data/raw/hindi_corpus/train")
     
+    print("Training tokenizer...")
     tokenizer = HindiTokenizer()
     tokenizer.train(train_text, vocab_size=vocab_size)
     
+    print("Encoding tokens...")
     train_tokens = tokenizer.encode(" ".join(train_text))
     val_tokens = tokenizer.encode(" ".join(val_text))
     
+    print("Creating datasets...")
     train_dataset = LanguageModelingDataset(train_tokens, max_seq_len)
     val_dataset = LanguageModelingDataset(val_tokens, max_seq_len)
     
+    print("Creating dataloaders...")
     train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
     val_loader = DataLoader(val_dataset, batch_size=batch_size, shuffle=False)
     
+    print("Initializing model...")
     model = GPTLanguageModel(vocab_size, embed_dim, num_heads, hidden_dim, num_layers, max_seq_len).to(device)
     
+    print("Initializing loss function and optimizer...")
     criterion = nn.CrossEntropyLoss()
     optimizer = optim.Adam(model.parameters(), lr=0.001)
     
+    print("Starting training...")
     for epoch in range(epochs):
         train_loss = train_epoch(model, train_loader, optimizer, criterion, device)
         val_loss, perplexity = evaluate(model, val_loader, criterion, device)
@@ -113,4 +121,5 @@ def run_language_modeling():
     
 
 if __name__ == "__main__":
+    print("Starting language modeling...")
     run_language_modeling()

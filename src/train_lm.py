@@ -78,8 +78,15 @@ def run_language_modeling():
     tokenizer.train(train_text, vocab_size=vocab_size)
     
     print("Encoding tokens...")
-    train_tokens = tokenizer.encode(" ".join(train_text))
-    val_tokens = tokenizer.encode(" ".join(val_text))
+    train_tokens = []
+    for text in train_text:
+        encoded_text = tokenizer.encode(text)
+        train_tokens.extend(encoded_text)
+        
+    val_tokens = []
+    for text in val_text:
+        encoded_text = tokenizer.encode(text)
+        val_tokens.extend(encoded_text)
     
     print("Creating datasets...")
     train_dataset = LanguageModelingDataset(train_tokens, max_seq_len)

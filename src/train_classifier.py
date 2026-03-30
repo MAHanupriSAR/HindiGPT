@@ -66,7 +66,8 @@ def run_classification():
     epochs = 5
     num_classes = 3
     
-    train_text, _ = load_and_split_corpus("data/raw/hindi_corpus/train")
+    # train_text, _ = load_and_split_corpus("data/raw/hindi_corpus/train")
+    train_text, _ = load_and_split_corpus("data/raw/hindi_corpus/merged_train.txt")
     tokenizer = HindiTokenizer()
     tokenizer.train(train_text, vocab_size=vocab_size)
     
